@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import edu.lawrence.meetUp.interfaces.dtos.ProfileDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,14 +36,17 @@ public class Profile {
 	private int rank;
 	private List<String> sport;
 	
-	public Profile() {
-	}
 	
-	/*
-	public Profile(ProfileDTO) {
-		
+	
+	public Profile(ProfileDTO core){
+		name = core.getName();
+		email = core.getEmail();
+		phone = core.getPhone();
+		location = core.getLocation();
+		rank = core.getRank();
+		sport = core.getSport();
 	}
-	*/
+
 	
 	public UUID getProfileid(){
 		return profileid;
