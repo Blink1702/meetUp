@@ -1,6 +1,5 @@
 package edu.lawrence.meetUp.entities;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -11,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,9 +23,8 @@ public class User {
 	private UUID userid;
 	private String username;
 	private String password;
-	private List<String> sport;
-	private String location;
-	private String rank;
+	@OneToOne(mappedBy="user")
+	private Profile profile;
 	
 	public User() {}
 	
@@ -53,30 +52,13 @@ public class User {
 		this.password = password;
 	}
 	
-	public void setSport(List<String> sport) {
-		this.sport = sport;
+	public Profile getProfile() {
+		return profile;
 	}
 	
-	public List<String> getSport(){
-		return sport;
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
-	
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	
-	public String getRank() {
-		return rank;
-	}
-
-	public void setRank(String rank) {
-		this.rank = rank;
-	}
-	
 
 	
 }
