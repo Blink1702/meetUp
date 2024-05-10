@@ -1,8 +1,11 @@
 package edu.lawrence.meetUp.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.lawrence.meetUp.entities.User;
 import edu.lawrence.meetUp.interfaces.dtos.UserDTO;
 import edu.lawrence.meetUp.repositories.ProfileRepository;
 import edu.lawrence.meetUp.repositories.UserRepository;
@@ -19,13 +22,13 @@ public class UserService {
 	ProfileRepository profileRepository;
 	
 	
-	public String save(UserDTO user) throws DuplicateException {
-		List<User> existing = userRepository.findByName(user.getUsername());
+	public String save(UserDTO user) {
+		List<User> existing = userRepository.findByUsername(user.getUsername());
 		if(existing.size() > 0)
-			throw new DuplicateException();
+			return "Duplicate.";
 		
 		User newUser = new User();
-		newUser.setName(user.getUsername());
+		newUser.setUsername(user.getUsername());
 		String hash = passwordService.hashPassword(user.getPassword());
 	    newUser.setPassword(hash);
 		userRepository.save(newUser);
