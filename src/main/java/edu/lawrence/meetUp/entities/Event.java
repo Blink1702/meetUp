@@ -24,7 +24,7 @@ public class Event {
 	private UUID eventid;
 	@ManyToOne
 	@JoinColumn(name="participant")
-	private User user;
+	private User participant;
 	private String time;
 	private String place;
 	
@@ -46,12 +46,12 @@ public class Event {
 		this.eventid = eventid;
 	}
 	
-	public User getUser() {
-		return user;
+	public User getParticipant() {
+		return participant;
 	}
 	
-	public void setUser(User user) {
-		this.user = user;
+	public void setParticipant(User participant) {
+		this.participant = participant;
 	}
 	
 	public String getTime() {
