@@ -4,16 +4,28 @@ import edu.lawrence.meetUp.entities.Event;
 import edu.lawrence.meetUp.entities.User;
 
 public class EventDTO {
+	private User host;
 	private User participant;
 	private String time;
 	private String place;
+	private String sport;
 	
 	public EventDTO() {}
 	
 	public EventDTO(Event core) {
+		host = core.getHost();
 		participant = core.getParticipant();
 		time = core.getTime();
 		place = core.getPlace();
+		sport = core.getSport();
+	}
+	
+	public User getHost() {
+		return host;
+	}
+
+	public void setHost(User host) {
+		this.host = host;
 	}
 
 	public User getParticipant() {
@@ -40,6 +52,14 @@ public class EventDTO {
 		this.time = time;
 	}
 	
-	
+	public String getSport() {
+		return sport;
+	}
+
+
+	public void setSport(String sport) {
+		this.sport = sport;
+	}
+
 
 }

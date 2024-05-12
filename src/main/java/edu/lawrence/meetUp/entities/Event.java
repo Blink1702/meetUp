@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import edu.lawrence.meetUp.interfaces.dtos.EventDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,18 +26,21 @@ public class Event {
 	@ManyToOne
 	@JoinColumn(name="participant")
 	private User participant;
+	@ManyToOne
+	@JoinColumn(name="host")
+	private User host;
 	private String time;
 	private String place;
+	private String sport;
 	
-	public Event() {
-		
+	public Event(EventDTO core) {
+		host = core.getHost();
+		participant = core.getParticipant();
+		time = core.getTime();
+		place = core.getPlace();	
+		sport = core.getSport();
 	}
-	
-	/*
-	public Event(EventDTO) {
-		
-	}
-	*/
+
 	
 	public UUID getEventid() {
 		return eventid;
@@ -54,6 +58,14 @@ public class Event {
 		this.participant = participant;
 	}
 	
+	public User getHost() {
+		return host;
+	}
+	
+	public void setTime(User host) {
+		this.host = host;
+	}
+	
 	public String getTime() {
 		return time;
 	}
@@ -68,5 +80,15 @@ public class Event {
 	
 	public void setPlace(String place) {
 		this.place = place;
+	}
+
+
+	public String getSport() {
+		return sport;
+	}
+
+
+	public void setSport(String sport) {
+		this.sport = sport;
 	}
 }
