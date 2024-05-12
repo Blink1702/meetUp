@@ -2,6 +2,8 @@ package edu.lawrence.meetUp.interfaces.dtos;
 
 import java.util.List;
 
+import edu.lawrence.meetUp.entities.Profile;
+
 public class ProfileDTO {
 	private String user;
 	private String name;
@@ -13,7 +15,7 @@ public class ProfileDTO {
 	
 	public ProfileDTO() {}
 	
-	public ProfileDTO(edu.lawrence.meetUp.entities.Profile core) {
+	public ProfileDTO(Profile core) {
 		user = core.getUser().getUserid().toString();
 		name = core.getName();
 		email = core.getEmail();

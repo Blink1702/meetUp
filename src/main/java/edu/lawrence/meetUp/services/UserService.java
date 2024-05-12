@@ -52,18 +52,19 @@ public class UserService {
         return u;	
 	}
 	
-	public void saveProfile(UUID userid,ProfileDTO profile) throws WrongUserException, DuplicateException {
+	public String saveProfile (UUID userid,ProfileDTO profile){
 		Optional<User> maybeUser = userRepository.findById(userid);
 		if(!maybeUser.isPresent())
-			throw new WrongUserException();
+			return "Not allowed";
 		
 		User user = maybeUser.get();
 		if(user.getProfile() != null)
-			throw new DuplicateException();
+			return "Duplicate";
 		
 		Profile newProfile = new Profile(profile);
 		newProfile.setUser(user);
 		profileRepository.save(newProfile);
+		return newProfile.getProfileid().toString();
 	}
 	
 	public Profile findProfile(UUID userid) {
