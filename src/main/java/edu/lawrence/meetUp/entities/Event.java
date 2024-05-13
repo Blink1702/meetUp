@@ -34,8 +34,6 @@ public class Event {
 	private String sport;
 	
 	public Event(EventDTO core) {
-		host = core.getHost();
-		participant = core.getParticipant();
 		time = core.getTime();
 		place = core.getPlace();	
 		sport = core.getSport();

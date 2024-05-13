@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import edu.lawrence.meetUp.interfaces.dtos.UserDTO;
 import edu.lawrence.meetUp.security.JwtService;
 import edu.lawrence.meetUp.services.DuplicateException;
 import edu.lawrence.meetUp.services.UserService;
+import edu.lawrence.meetUp.services.WrongUserException;
 
 @RestController
 @RequestMapping("/users")
@@ -56,16 +58,16 @@ public class UserController {
 	}
 	
 	@PostMapping("/profile")
-	public ResponseEntity<String> saveProfile(@RequestBody ProfileDTO profile) {
-    	UUID id = UUID.fromString(User.getUsername());
+	public ResponseEntity<String> saveProfile(@PathVariable UUID id,@RequestBody ProfileDTO profile) {
+    	//UUID id = UUID.fromString(User.getUsername());
     	try {
     		us.saveProfile(id,profile);
     	} catch(WrongUserException ex) {
-    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid user id");
+    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("/Invalid user id/");
     	} catch(DuplicateException ex) {
-    		return ResponseEntity.status(HttpStatus.CONFLICT).body("Duplicate profile");
+    		return ResponseEntity.status(HttpStatus.CONFLICT).body("/Duplicate profile/");
     	}
-    	return ResponseEntity.status(HttpStatus.CREATED).body("Profile created");
+    	return ResponseEntity.status(HttpStatus.CREATED).body("/Profile created/");
     }
 	
 
