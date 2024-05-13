@@ -58,6 +58,10 @@ public class Event {
 		this.participant = participant;
 	}
 	
+	public void setHost(User host) {
+		this.host = host;
+	}
+	
 	public User getHost() {
 		return host;
 	}

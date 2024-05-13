@@ -9,7 +9,6 @@ import edu.lawrence.meetUp.entities.Event;
 import edu.lawrence.meetUp.entities.User;
 
 public interface EventRepository extends JpaRepository<Event,UUID>  {
-	List<Event> findByHost(User host);
 	List<Event> findByTime(String time);
 	List<Event> findByPlace(String place);
 	List<Event> findBySport(String sport);

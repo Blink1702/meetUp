@@ -52,10 +52,10 @@ public class UserService {
         return u;	
 	}
 	
-	public String saveProfile (UUID userid,ProfileDTO profile) throws DuplicateException{
+	public String saveProfile (UUID userid,ProfileDTO profile) throws DuplicateException, WrongUserException{
 		Optional<User> maybeUser = userRepository.findById(userid);
 		if(!maybeUser.isPresent())
-			return "Not allowed";
+			throw new WrongUserException();
 		
 		User user = maybeUser.get();
 		if(user.getProfile() != null)

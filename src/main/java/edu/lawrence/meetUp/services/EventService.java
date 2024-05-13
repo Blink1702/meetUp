@@ -1,24 +1,31 @@
 package edu.lawrence.meetUp.services;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.lawrence.meetUp.entities.User;
 import edu.lawrence.meetUp.entities.Event;
 import edu.lawrence.meetUp.interfaces.dtos.EventDTO;
 import edu.lawrence.meetUp.repositories.EventRepository;
+import edu.lawrence.meetUp.repositories.UserRepository;
 
 @Service
 public class EventService {
 	@Autowired
 	EventRepository eventRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	
-	public String save(EventDTO event) throws DuplicateException {
-		List<Event> existing = eventRepository.findByHost(event.getHost());
-		if(existing.size() > 0) 
-			throw new DuplicateException();
+	public String save(EventDTO event) throws WrongUserException {
+		Optional<User> maybeUser = userRepository.findById(UUID.fromString(event.getHost()));
+		if(!maybeUser.isPresent()) 
+			throw new WrongUserException();
 		Event newEvent = new Event(event);
 		eventRepository.save(newEvent);
 		
