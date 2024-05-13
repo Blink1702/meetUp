@@ -27,7 +27,7 @@ public class User {
 	private String password;
 	@OneToOne(mappedBy="user")
 	private Profile profile;
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="participant")
 	List<Event> event;
 	
 	public User() {}
