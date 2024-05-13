@@ -26,10 +26,10 @@ public class UserService {
 	ProfileRepository profileRepository;
 	
 	
-	public String save(UserDTO user) {
+	public String save(UserDTO user) throws DuplicateException {
 		List<User> existing = userRepository.findByUsername(user.getUsername());
 		if(existing.size() > 0)
-			return "Duplicate.";
+			throw new DuplicateException();
 		
 		User newUser = new User();
 		newUser.setUsername(user.getUsername());
@@ -52,14 +52,14 @@ public class UserService {
         return u;	
 	}
 	
-	public String saveProfile (UUID userid,ProfileDTO profile){
+	public String saveProfile (UUID userid,ProfileDTO profile) throws DuplicateException{
 		Optional<User> maybeUser = userRepository.findById(userid);
 		if(!maybeUser.isPresent())
 			return "Not allowed";
 		
 		User user = maybeUser.get();
 		if(user.getProfile() != null)
-			return "Duplicate";
+			throw new DuplicateException();
 		
 		Profile newProfile = new Profile(profile);
 		newProfile.setUser(user);

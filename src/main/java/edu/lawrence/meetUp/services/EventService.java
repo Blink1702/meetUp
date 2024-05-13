@@ -15,10 +15,10 @@ public class EventService {
 	EventRepository eventRepository;
 
 	
-	public String save(EventDTO event) {
+	public String save(EventDTO event) throws DuplicateException {
 		List<Event> existing = eventRepository.findByHost(event.getHost());
 		if(existing.size() > 0) 
-			return "Duplicate.";
+			throw new DuplicateException();
 		Event newEvent = new Event(event);
 		eventRepository.save(newEvent);
 		
