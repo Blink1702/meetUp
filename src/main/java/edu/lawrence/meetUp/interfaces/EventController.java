@@ -28,7 +28,7 @@ public class EventController {
 	public ResponseEntity<String> save(@RequestBody EventDTO event){
 		String key = es.save(event);
 		
-		return ResponseEntity.ok().body();
+		return ResponseEntity.ok().body(key);
 	}
 	
 
