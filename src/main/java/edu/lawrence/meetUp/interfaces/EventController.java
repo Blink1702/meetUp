@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.lawrence.meetUp.interfaces.dtos.EventDTO;
 import edu.lawrence.meetUp.services.EventService;
 
 @RestController
@@ -21,6 +22,13 @@ public class EventController {
 	
 	public EventController(EventService es) {
 		this.es = es;
+	}
+	
+	@PostMapping
+	public ResponseEntity<String> save(@RequestBody EventDTO event){
+		String key = es.save(event);
+		
+		return ResponseEntity.ok().body();
 	}
 	
 
