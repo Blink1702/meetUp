@@ -8,7 +8,6 @@ import org.hibernate.type.SqlTypes;
 
 import edu.lawrence.meetUp.interfaces.dtos.ProfileDTO;
 import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -35,8 +34,7 @@ public class Profile {
 	private String phone;
 	private String location;
 	private int rank;
-	@Embedded
-    private UserSports sport;
+	private List<String> sport;
 	
 	
 	
@@ -106,11 +104,11 @@ public class Profile {
 		this.rank = rank;
 	}
 	
-	public UserSports getSport(){
+	public List<String> getSport(){
 		return sport;
 	}
 	
-	public void setSport(UserSports sport) {
+	public void setSport(List<String> sport) {
 		this.sport = sport;
 	}
 }

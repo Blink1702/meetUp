@@ -3,7 +3,6 @@ package edu.lawrence.meetUp.interfaces.dtos;
 import java.util.List;
 
 import edu.lawrence.meetUp.entities.Profile;
-import edu.lawrence.meetUp.entities.UserSports;
 
 public class ProfileDTO {
 	private String user;
@@ -12,7 +11,7 @@ public class ProfileDTO {
 	private String phone;
 	private String location;
 	private int rank;
-	private UserSports sport;
+	private List<String> sport;
 	
 	public ProfileDTO() {}
 	
@@ -61,10 +60,10 @@ public class ProfileDTO {
 		this.location = location;
 	}
 	
-	public UserSports getSport() {
+	public List<String> getSport() {
 		return sport;
 	}
-	public void setSport(UserSports sport) {
+	public void setSport(List<String> sport) {
 		this.sport = sport;
 	}
 
