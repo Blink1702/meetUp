@@ -11,7 +11,7 @@ public class ProfileDTO {
 	private String phone;
 	private String location;
 	private int rank;
-	private String sport;
+	private List<String> sport;
 	
 	public ProfileDTO() {}
 	
@@ -60,10 +60,10 @@ public class ProfileDTO {
 		this.location = location;
 	}
 	
-	public String getSport() {
+	public List<String> getSport() {
 		return sport;
 	}
-	public void setSport(String sport) {
+	public void setSport(List<String> sport) {
 		this.sport = sport;
 	}
 

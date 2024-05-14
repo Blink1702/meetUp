@@ -33,9 +33,7 @@ public class Profile {
 	private String phone;
 	private String location;
 	private int rank;
-	private String sport;
-	
-	
+	private List<String> sport;
 	
 	
 	public Profile(ProfileDTO core){
@@ -104,11 +102,11 @@ public class Profile {
 		this.rank = rank;
 	}
 	
-	public String getSport(){
+	public List<String> getSport(){
 		return sport;
 	}
 	
-	public void setSport(String sport) {
+	public void setSport(List<String> sport) {
 		this.sport = sport;
 	}
 }
