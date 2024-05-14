@@ -27,7 +27,6 @@ public class Profile {
 	private UUID profileid;
 	@OneToOne
 	@JoinColumn(name="user")
-	@MapsId
 	private User user;
 	private String name;
 	private String email;
@@ -35,6 +34,7 @@ public class Profile {
 	private String location;
 	private int rank;
 	private String sport;
+	
 	
 	
 	
