@@ -34,7 +34,7 @@ public class Profile {
 	private String phone;
 	private String location;
 	private int rank;
-	private List<String> sport;
+	private String sport;
 	
 	
 	
@@ -104,11 +104,11 @@ public class Profile {
 		this.rank = rank;
 	}
 	
-	public List<String> getSport(){
+	public String getSport(){
 		return sport;
 	}
 	
-	public void setSport(List<String> sport) {
+	public void setSport(String sport) {
 		this.sport = sport;
 	}
 }
