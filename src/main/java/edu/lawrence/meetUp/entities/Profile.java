@@ -32,7 +32,7 @@ public class Profile {
 	private String location;
 	private Integer rank;
 	@OneToOne
-	@JoinColumn(name="user_id")
+	@JoinColumn(name="user")
 	private User user;
 	private String sport;
 	
