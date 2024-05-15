@@ -34,9 +34,9 @@ public class Profile {
 	@OneToOne
 	@JoinColumn(name="user")
 	private User user;
-	private List<String> sport;
+	private String sport;
 	
-	
+	public Profile() {}
 	
 	public Profile(ProfileDTO core){
 		name = core.getName();
@@ -104,11 +104,11 @@ public class Profile {
 		this.ranking = ranking;
 	}
 	
-	public List<String> getSport(){
+	public String getSport(){
 		return sport;
 	}
 	
-	public void setSport(List<String> sport) {
+	public void setSport(String sport) {
 		this.sport = sport;
 	}
 }

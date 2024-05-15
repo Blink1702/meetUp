@@ -33,6 +33,8 @@ public class Event {
 	private String place;
 	private String sport;
 	
+	public Event() {}
+	
 	public Event(EventDTO core) {
 		time = core.getTime();
 		place = core.getPlace();	

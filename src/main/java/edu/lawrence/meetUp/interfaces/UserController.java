@@ -59,9 +59,9 @@ public class UserController {
         return ResponseEntity.ok().body(user);
 	}
 	
-	@PostMapping("/profile")
+	@PostMapping("/{id}/profile")
 	public ResponseEntity<String> saveProfile(@PathVariable UUID id,@RequestBody ProfileDTO profile) {
-    	//UUID id = UUID.fromString(User.getUsername());
+    	//UUID id = UUID.fromString(User.getUsername()';);
     	try {
     		us.saveProfile(id,profile);
     	} catch(WrongUserException ex) {
