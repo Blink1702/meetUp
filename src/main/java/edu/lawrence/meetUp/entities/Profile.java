@@ -30,11 +30,11 @@ public class Profile {
 	private String email;
 	private String phone;
 	private String location;
-	private Integer rank;
+	private int ranking;
 	@OneToOne
 	@JoinColumn(name="user")
 	private User user;
-	private String sport;
+	private List<String> sport;
 	
 	
 	
@@ -43,7 +43,7 @@ public class Profile {
 		email = core.getEmail();
 		phone = core.getPhone();
 		location = core.getLocation();
-		rank = core.getRank();
+		ranking = core.getRanking();
 		sport = core.getSport();
 	}
 
@@ -96,19 +96,19 @@ public class Profile {
 		this.location = location;
 	}
 	
-	public int getRank() {
-		return rank;
+	public int getRanking() {
+		return ranking;
 	}
 	
-	public void setRank(int rank) {
-		this.rank = rank;
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
 	}
 	
-	public String getSport(){
+	public List<String> getSport(){
 		return sport;
 	}
 	
-	public void setSport(String sport) {
+	public void setSport(List<String> sport) {
 		this.sport = sport;
 	}
 }
