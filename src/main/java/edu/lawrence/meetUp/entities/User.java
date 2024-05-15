@@ -16,11 +16,11 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@Column(columnDefinition = "VARCHAR(45)")
+	@Column(columnDefinition = "VARCHAR(255)")
 	@JdbcTypeCode(SqlTypes.VARCHAR)
 	private UUID userid;
 	private String username;

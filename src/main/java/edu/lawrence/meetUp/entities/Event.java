@@ -16,11 +16,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="event")
+@Table(name="events")
 public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@Column(columnDefinition = "VARCHAR(45)")
+	@Column(columnDefinition = "VARCHAR(255)")
 	@JdbcTypeCode(SqlTypes.VARCHAR)
 	private UUID eventid;
 	@ManyToOne

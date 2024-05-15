@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
+import org.springframework.context.annotation.DependsOn;
 
 import edu.lawrence.meetUp.interfaces.dtos.ProfileDTO;
 import jakarta.persistence.Column;
@@ -18,22 +19,23 @@ import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="profile")
+@Table(name="profiles")
 public class Profile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@Column(columnDefinition = "VARCHAR(45)")
+	@Column(columnDefinition = "VARCHAR(255)")
 	@JdbcTypeCode(SqlTypes.VARCHAR)
 	private UUID profileid;
-	@OneToOne
-	@JoinColumn(name="user")
-	private User user;
 	private String name;
 	private String email;
 	private String phone;
 	private String location;
-	private int rank;
-	private List<String> sport;
+	private Integer rank;
+	@OneToOne
+	@JoinColumn(name="user_id")
+	private User user;
+	private String sport;
+	
 	
 	
 	public Profile(ProfileDTO core){
@@ -102,11 +104,11 @@ public class Profile {
 		this.rank = rank;
 	}
 	
-	public List<String> getSport(){
+	public String getSport(){
 		return sport;
 	}
 	
-	public void setSport(List<String> sport) {
+	public void setSport(String sport) {
 		this.sport = sport;
 	}
 }
