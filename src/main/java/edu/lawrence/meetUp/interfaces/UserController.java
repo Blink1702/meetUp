@@ -49,13 +49,14 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody UserDTO user){
+	public ResponseEntity<UserDTO> login(@RequestBody UserDTO user){
 		User result = us.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 	    if (result == null) {
-	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid user name or password");
+	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(user);
         }
         String token = jwtService.makeJwt(result.getUserid().toString());
-        return ResponseEntity.ok().body(token);
+        user.setToken(token);
+        return ResponseEntity.ok().body(user);
 	}
 	
 	@PostMapping("/profile")
