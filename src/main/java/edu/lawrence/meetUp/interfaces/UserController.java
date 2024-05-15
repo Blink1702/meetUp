@@ -33,18 +33,19 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<String> save(@RequestBody UserDTO user){
+	public ResponseEntity<UserDTO> save(@RequestBody UserDTO user){
 		if(user.getUsername().isBlank() || user.getPassword().isBlank()) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Empty username or password");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(user);
 		}
 		String key;
 		try {
 			key = us.save(user);
 		} catch(DuplicateException ex) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(user);
 		}
 		String token = jwtService.makeJwt(key);
-		return ResponseEntity.status(HttpStatus.CREATED).body(token);
+		user.setToken(token);
+		return ResponseEntity.status(HttpStatus.CREATED).body(user);
 	}
 	
 	@PostMapping("/login")

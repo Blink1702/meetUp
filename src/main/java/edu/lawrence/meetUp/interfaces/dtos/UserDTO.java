@@ -3,6 +3,7 @@ package edu.lawrence.meetUp.interfaces.dtos;
 public class UserDTO {
 	private String username;
 	private String password;
+	private String token;
 	
 	public UserDTO() {}
 
@@ -20,6 +21,14 @@ public class UserDTO {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }
