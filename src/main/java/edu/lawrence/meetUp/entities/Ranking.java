@@ -37,6 +37,14 @@ public class Ranking {
 		this.rankingid = rankingid;
 	}
 	
+	public Profile getProfile() {
+		return profile;
+	}
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+	
+	
 	public Integer getPingpong() {
 		return pingpong;
 	}
