@@ -30,7 +30,8 @@ public class Profile {
 	private String email;
 	private String phone;
 	private String location;
-	private int ranking;
+	@OneToOne(mappedBy="profile")
+	private Ranking ranking;
 	@OneToOne
 	@JoinColumn(name="user")
 	private User user;
@@ -43,7 +44,6 @@ public class Profile {
 		email = core.getEmail();
 		phone = core.getPhone();
 		location = core.getLocation();
-		ranking = core.getRanking();
 		sport = core.getSport();
 	}
 
@@ -96,11 +96,11 @@ public class Profile {
 		this.location = location;
 	}
 	
-	public int getRanking() {
+	public Ranking getRanking() {
 		return ranking;
 	}
 	
-	public void setRanking(int ranking) {
+	public void setRanking(Ranking ranking) {
 		this.ranking = ranking;
 	}
 	
