@@ -83,6 +83,15 @@ public class UserService {
 		return maybeUser.get().getProfile();
 	}
 	
+	public List<Profile> findProfileBySport(String sport) {
+		List<Profile> existing = profileRepository.findBySport(sport);
+		if(existing.size() <= 0) 
+			return null;
+		
+		return existing;
+		
+	}
+	
 	public String setRanking(UUID userid, RankingDTO ranking) throws DuplicateException, WrongUserException{
 		Optional<User> maybeUser = userRepository.findById(userid);
 		if(!maybeUser.isPresent())
@@ -98,5 +107,6 @@ public class UserService {
 		
 		return newRanking.getRankingid().toString();
 	}
+	
 
 }

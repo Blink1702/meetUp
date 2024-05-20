@@ -1,5 +1,7 @@
 package edu.lawrence.meetUp.interfaces;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
@@ -87,6 +89,20 @@ public class UserController {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     	}
     	ProfileDTO response = new ProfileDTO(result);
+    	return ResponseEntity.ok().body(response);
+    }
+    
+    @GetMapping("/profile/{sport}")
+    public ResponseEntity<List<ProfileDTO>> getProfileBySport(@PathVariable String sport) {
+    	List<Profile> results = us.findProfileBySport(sport);
+    	if(results == null) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    	}
+    	
+    	List<ProfileDTO> response = new ArrayList<ProfileDTO>();
+    	for(Profile p : results) {
+    		response.add(new ProfileDTO(p));
+    	}
     	return ResponseEntity.ok().body(response);
     }
     
