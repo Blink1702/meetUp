@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import edu.lawrence.meetUp.interfaces.dtos.RankingDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,13 +24,22 @@ public class Ranking {
 	@JdbcTypeCode(SqlTypes.VARCHAR)
 	private UUID rankingid;
 	@OneToOne
-	@JoinColumn(name="profile")
-	private Profile profile;
+	@JoinColumn(name="user")
+	private User user;
 	private Integer pingpong;
 	private Integer tennis;
 	private Integer pickleball;
 	private Integer badminton;
 	
+	public Ranking() {}
+	
+	public Ranking(RankingDTO core) {
+		pingpong = core.getPingpong();
+		tennis = core.getTennis();
+		pickleball = core.getPickleball();
+		badminton = core.getBadminton();
+	}
+
 	public UUID getRankingid() {
 		return rankingid;
 	}
@@ -37,11 +47,11 @@ public class Ranking {
 		this.rankingid = rankingid;
 	}
 	
-	public Profile getProfile() {
-		return profile;
+	public User getUser() {
+		return user;
 	}
-	public void setProfile(Profile profile) {
-		this.profile = profile;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

@@ -29,6 +29,8 @@ public class User {
 	private Profile profile;
 	@OneToMany(mappedBy="participant")
 	List<Event> event;
+	@OneToOne(mappedBy="user")
+	private Ranking ranking;
 	
 	public User() {}
 	
@@ -70,6 +72,14 @@ public class User {
 
 	public void setEvent(List<Event> event) {
 		this.event = event;
+	}
+	
+	public Ranking getRanking() {
+		return ranking;
+	}
+	
+	public void setRanking(Ranking ranking) {
+		this.ranking = ranking;
 	}
 
 	

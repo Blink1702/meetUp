@@ -11,7 +11,6 @@ public class ProfileDTO {
 	private String email;
 	private String phone;
 	private String location;
-	private String ranking;
 	private String sport;
 	
 	public ProfileDTO() {}
@@ -22,7 +21,6 @@ public class ProfileDTO {
 		email = core.getEmail();
 		phone = core.getPhone();
 		location = core.getLocation();
-		ranking = core.getRanking().getRankingid().toString();
 		sport = core.getSport();
 ;
 		}
@@ -67,16 +65,6 @@ public class ProfileDTO {
 	}
 	public void setSport(String	 sport) {
 		this.sport = sport;
-	}
-
-	public String getRanking() {
-		return ranking;
-	}
-
-	public void setRanking(String ranking) {
-		this.ranking = ranking;
-	}
-
-	
+	}	
 
 }

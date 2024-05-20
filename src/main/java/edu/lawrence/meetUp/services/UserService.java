@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.lawrence.meetUp.entities.Profile;
+import edu.lawrence.meetUp.entities.Ranking;
 import edu.lawrence.meetUp.entities.User;
 import edu.lawrence.meetUp.interfaces.dtos.ProfileDTO;
+import edu.lawrence.meetUp.interfaces.dtos.RankingDTO;
 import edu.lawrence.meetUp.interfaces.dtos.UserDTO;
 import edu.lawrence.meetUp.repositories.ProfileRepository;
+import edu.lawrence.meetUp.repositories.RankingRepository;
 import edu.lawrence.meetUp.repositories.UserRepository;
 import edu.lawrence.meetUp.security.PasswordService;
 import edu.lawrence.meetUp.security.WrongUserException;
@@ -26,6 +29,9 @@ public class UserService {
 	
 	@Autowired
 	ProfileRepository profileRepository;
+	
+	@Autowired
+	RankingRepository rankingRepository;
 	
 	
 	public String save(UserDTO user) throws DuplicateException {
@@ -75,6 +81,22 @@ public class UserService {
 			return null;
 		
 		return maybeUser.get().getProfile();
+	}
+	
+	public String setRanking(UUID userid, RankingDTO ranking) throws DuplicateException, WrongUserException{
+		Optional<User> maybeUser = userRepository.findById(userid);
+		if(!maybeUser.isPresent())
+			throw new WrongUserException();
+		
+		User user = maybeUser.get();
+		if(user.getRanking() != null)
+			throw new DuplicateException();
+		
+		Ranking newRanking = new Ranking(ranking);
+		newRanking.setUser(user);
+		rankingRepository.save(newRanking);
+		
+		return newRanking.getRankingid().toString();
 	}
 
 }

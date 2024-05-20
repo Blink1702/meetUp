@@ -3,7 +3,7 @@ package edu.lawrence.meetUp.interfaces.dtos;
 import edu.lawrence.meetUp.entities.Ranking;
 
 public class RankingDTO {
-	private String profile;
+	private String user;
 	private Integer pingpong;
 	private Integer tennis;
 	private Integer pickleball;
@@ -13,7 +13,7 @@ public class RankingDTO {
 	public RankingDTO() {}
 
 	public RankingDTO(Ranking core) {
-		profile = core.getProfile().getProfileid().toString();
+		user = core.getUser().getUserid().toString();
 		pingpong = core.getPingpong();
 		tennis = core.getTennis();
 		pickleball = core.getPickleball();
@@ -21,12 +21,12 @@ public class RankingDTO {
 	
 	}
 
-	public String getProfile() {
-		return profile;
+	public String getUser() {
+		return user;
 	}
 
-	public void setProfile(String profile) {
-		this.profile = profile;
+	public void setUser(String user) {
+		this.user = user;
 	}
 
 	public Integer getPingpong() {

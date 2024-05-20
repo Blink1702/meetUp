@@ -36,14 +36,14 @@ public class APIBasicTests {
 		RestAssured.baseURI = "http://localhost";
 		
 		testHost = new UserDTO();
-		testHost.setName("TestSeller");
+		testHost.setName("TestHost");
 		testHost.setPassword("hello");
 		
 		testParticipantOne = new UserDTO();
-		testParticipantOne.setName("BuyerOne");
+		testParticipantOne.setName("ParticipantOne");
 		testParticipantOne.setPassword("hello");
 		testParticipantTwo = new UserDTO();
-		testParticipantTwo.setName("BuyerTwo");
+		testParticipantTwo.setName("ParticipantTwo");
 		testParticipantTwo.setPassword("hello");
 	}
 	
@@ -83,7 +83,6 @@ public class APIBasicTests {
 		testHostProfile.setEmail("seller@sales.com");
 		testHostProfile.setPhone("9205551212");
 		testHostProfile.setLocation("Appleton, WI");
-		testHostProfile.setRanking("basketball:10, football:23");
 		testHostProfile.setSport("basketball,football");
 		
 		

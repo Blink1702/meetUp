@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.lawrence.meetUp.entities.Profile;
 import edu.lawrence.meetUp.entities.User;
 import edu.lawrence.meetUp.interfaces.dtos.ProfileDTO;
+import edu.lawrence.meetUp.interfaces.dtos.RankingDTO;
 import edu.lawrence.meetUp.interfaces.dtos.UserDTO;
 import edu.lawrence.meetUp.security.JwtService;
 import edu.lawrence.meetUp.security.MeetupUserDetails;
@@ -88,6 +89,21 @@ public class UserController {
     	ProfileDTO response = new ProfileDTO(result);
     	return ResponseEntity.ok().body(response);
     }
+    
+    @PostMapping("/ranking")
+    public ResponseEntity<String> saveRanking(Authentication authentication,@RequestBody RankingDTO ranking){
+    	MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
+    	UUID id = UUID.fromString(details.getUsername());
+    	try {
+    		us.setRanking(id, ranking);
+    	} catch(WrongUserException ex) {
+    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("/Invalid user id/");
+    	} catch(DuplicateException ex) {
+    		return ResponseEntity.status(HttpStatus.CONFLICT).body("/Duplicate user/");
+    	}
+    	return ResponseEntity.status(HttpStatus.CREATED).body("/Ranking set/");
+    }
+    
 	
 
  //key = userService.save(user);
