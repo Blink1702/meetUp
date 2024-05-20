@@ -79,12 +79,11 @@ public class APIBasicTests {
 	@Order(2)
 	public void testPostProfile() {
 		ProfileDTO testHostProfile = new ProfileDTO();
-		testHostProfile.setName("Test Seller");
-		testHostProfile.setEmail("seller@sales.com");
+		testHostProfile.setName("Test Host");
+		testHostProfile.setEmail("hoster@host.com");
 		testHostProfile.setPhone("9205551212");
 		testHostProfile.setLocation("Appleton, WI");
 		testHostProfile.setSport("basketball,football");
-		
 		
 		given()
 		.header("Authorization","Bearer "+hostToken)
