@@ -45,15 +45,15 @@ public class EventController {
 			return ResponseEntity.ok().body(key);
 	}
 	
-	/*
+	
 	@PostMapping("/participate")
 	public ResponseEntity<String> addParticipant(Authentication authentication,@RequestBody EventDTO event){
 		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
 		event.setParticipant(details.getUsername());
 		
-		return ResponseEntity.ok.body("/Signed up for event/")
+		return ResponseEntity.ok().body("/Signed up for event/");
 	}
-	*/
+	
 	
 	@GetMapping(params = {"place"})
 	public ResponseEntity<List<EventDTO>> finEventByPlace(@RequestParam(value = "place")String place){
