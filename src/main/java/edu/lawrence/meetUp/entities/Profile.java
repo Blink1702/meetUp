@@ -29,7 +29,8 @@ public class Profile {
 	private String name;
 	private String email;
 	private String phone;
-	private String location;
+	private String latitude;
+	private String longitude;
 	@OneToOne
 	@JoinColumn(name="user")
 	private User user;
@@ -41,7 +42,8 @@ public class Profile {
 		name = core.getName();
 		email = core.getEmail();
 		phone = core.getPhone();
-		location = core.getLocation();
+		latitude = core.getLatitude();
+		longitude = core.getLongitude();
 		sport = core.getSport();
 	}
 
@@ -86,13 +88,6 @@ public class Profile {
 		this.phone = phone;
 	}
 	
-	public String getLocation() {
-		return location;
-	}
-	
-	public void setLocation(String location) {
-		this.location = location;
-	}
 		
 	public String getSport(){
 		return sport;
@@ -100,5 +95,21 @@ public class Profile {
 	
 	public void setSport(String sport) {
 		this.sport = sport;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 }

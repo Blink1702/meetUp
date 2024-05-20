@@ -82,7 +82,8 @@ public class APIBasicTests {
 		testHostProfile.setName("Test Host");
 		testHostProfile.setEmail("hoster@host.com");
 		testHostProfile.setPhone("9205551212");
-		testHostProfile.setLocation("Appleton, WI");
+		testHostProfile.setLongitude("45");
+		testHostProfile.setLatitude("32");
 		testHostProfile.setSport("basketball,football");
 		
 		given()

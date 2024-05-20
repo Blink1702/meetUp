@@ -10,7 +10,8 @@ public class ProfileDTO {
 	private String name;
 	private String email;
 	private String phone;
-	private String location;
+	private String latitude;
+	private String longitude;
 	private String sport;
 	
 	public ProfileDTO() {}
@@ -20,7 +21,8 @@ public class ProfileDTO {
 		name = core.getName();
 		email = core.getEmail();
 		phone = core.getPhone();
-		location = core.getLocation();
+		latitude = core.getLatitude();
+		longitude = core.getLongitude();
 		sport = core.getSport();
 ;
 		}
@@ -53,18 +55,27 @@ public class ProfileDTO {
 		this.phone = phone;
 	}
 	
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	
 	public String getSport() {
 		return sport;
 	}
 	public void setSport(String	 sport) {
 		this.sport = sport;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}	
 
 }
