@@ -1,4 +1,4 @@
-package edu.lawrence.meetUp.services;
+package edu.lawrence.meetUp.security;
 
 import org.springframework.stereotype.Service;
 

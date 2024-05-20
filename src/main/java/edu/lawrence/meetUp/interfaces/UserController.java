@@ -15,9 +15,9 @@ import edu.lawrence.meetUp.entities.User;
 import edu.lawrence.meetUp.interfaces.dtos.ProfileDTO;
 import edu.lawrence.meetUp.interfaces.dtos.UserDTO;
 import edu.lawrence.meetUp.security.JwtService;
+import edu.lawrence.meetUp.security.WrongUserException;
 import edu.lawrence.meetUp.services.DuplicateException;
 import edu.lawrence.meetUp.services.UserService;
-import edu.lawrence.meetUp.services.WrongUserException;
 
 @RestController
 @RequestMapping("/users")

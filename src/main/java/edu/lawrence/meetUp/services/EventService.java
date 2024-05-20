@@ -12,6 +12,7 @@ import edu.lawrence.meetUp.entities.Event;
 import edu.lawrence.meetUp.interfaces.dtos.EventDTO;
 import edu.lawrence.meetUp.repositories.EventRepository;
 import edu.lawrence.meetUp.repositories.UserRepository;
+import edu.lawrence.meetUp.security.WrongUserException;
 
 @Service
 public class EventService {

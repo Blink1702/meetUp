@@ -13,6 +13,8 @@ import edu.lawrence.meetUp.interfaces.dtos.ProfileDTO;
 import edu.lawrence.meetUp.interfaces.dtos.UserDTO;
 import edu.lawrence.meetUp.repositories.ProfileRepository;
 import edu.lawrence.meetUp.repositories.UserRepository;
+import edu.lawrence.meetUp.security.PasswordService;
+import edu.lawrence.meetUp.security.WrongUserException;
 
 @Service
 public class UserService {

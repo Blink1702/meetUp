@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.lawrence.meetUp.entities.Event;
 import edu.lawrence.meetUp.interfaces.dtos.EventDTO;
+import edu.lawrence.meetUp.security.WrongUserException;
 import edu.lawrence.meetUp.services.EventService;
-import edu.lawrence.meetUp.services.WrongUserException;
 
 @RestController
 @RequestMapping("/events")

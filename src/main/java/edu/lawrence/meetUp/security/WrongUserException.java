@@ -1,4 +1,4 @@
-package edu.lawrence.meetUp.services;
+package edu.lawrence.meetUp.security;
 
 public class WrongUserException extends Exception {
 	public WrongUserException() {
