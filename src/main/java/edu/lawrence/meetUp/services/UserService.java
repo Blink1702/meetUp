@@ -60,8 +60,8 @@ public class UserService {
         return u;	
 	}
 	
-	public String saveProfile (UUID userid,ProfileDTO profile) throws DuplicateException, WrongUserException{
-		Optional<User> maybeUser = userRepository.findById(userid);
+	public String saveProfile (ProfileDTO profile) throws DuplicateException, WrongUserException{
+		Optional<User> maybeUser = userRepository.findById(UUID.fromString(profile.getUser().toString()));
 		if(!maybeUser.isPresent())
 			throw new WrongUserException();
 		

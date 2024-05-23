@@ -56,22 +56,22 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<UserDTO> login(@RequestBody UserDTO user){
+	public ResponseEntity<String> login(@RequestBody UserDTO user){
 		User result = us.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 	    if (result == null) {
-	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(user);
+	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("/Invalid username or password/");
         }
         String token = jwtService.makeJwt(result.getUserid().toString());
         user.setToken(token);
-        return ResponseEntity.ok().body(user);
+        return ResponseEntity.ok().body(token);
 	}
 	
 	@PostMapping("/profile")
 	public ResponseEntity<String> saveProfile(Authentication authentication,@RequestBody ProfileDTO profile) {
-		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
-    	UUID id = UUID.fromString(details.getUsername());
+		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();	
+		profile.setUser(details.getUsername());
     	try {
-    		us.saveProfile(id,profile);
+    		us.saveProfile(profile);
     	} catch(WrongUserException ex) {
     		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("/Invalid user id/");
     	} catch(DuplicateException ex) {
@@ -79,6 +79,7 @@ public class UserController {
     	}
     	return ResponseEntity.status(HttpStatus.CREATED).body("/Profile created/");
     }
+	//logging.level.root=DEBUG 
 	
     @GetMapping("/profile")
     public ResponseEntity<ProfileDTO> getProfile(Authentication authentication) {
