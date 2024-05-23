@@ -33,6 +33,22 @@ public class EventService {
 		return newEvent.getEventid().toString();
 	}
 	
+	public String setParticipant(UUID eventid, UUID participantid) throws WrongUserException{
+		Optional<User> maybeUser = userRepository.findById(participantid);
+		if(!maybeUser.isPresent()) 
+			throw new WrongUserException();
+		User participant = maybeUser.get();
+		
+		Optional<Event> maybeEvent = eventRepository.findById(eventid);
+		if(!maybeEvent.isPresent())
+			throw new WrongUserException();
+		Event existingEvent = maybeEvent.get();
+		existingEvent.setParticipant(participant);
+		eventRepository.save(existingEvent);
+		
+		return "Participant saved";
+	}
+	
 	public List<Event> findEventByTime(String time) {
 		return eventRepository.findByTime(time);
 	}

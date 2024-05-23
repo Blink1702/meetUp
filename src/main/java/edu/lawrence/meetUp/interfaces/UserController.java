@@ -66,25 +66,24 @@ public class UserController {
         return ResponseEntity.ok().body(token);
 	}
 	
-	@PostMapping("/profile")
-	public ResponseEntity<String> saveProfile(Authentication authentication,@RequestBody ProfileDTO profile) {
-		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();	
-		profile.setUser(details.getUsername());
+	@PostMapping("/profile/{id}")
+	public ResponseEntity<String> saveProfile(/*Authentication authentication*/@PathVariable("id") UUID id,@RequestBody ProfileDTO profile) {
+		//MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();	
+		profile.setUser(id.toString());
     	try {
     		us.saveProfile(profile);
     	} catch(WrongUserException ex) {
-    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("/Invalid user id/");
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("/Invalid user id/");
     	} catch(DuplicateException ex) {
     		return ResponseEntity.status(HttpStatus.CONFLICT).body("/Duplicate profile/");
     	}
     	return ResponseEntity.status(HttpStatus.CREATED).body("/Profile created/");
     }
-	//logging.level.root=DEBUG 
 	
-    @GetMapping("/profile")
-    public ResponseEntity<ProfileDTO> getProfile(Authentication authentication) {
-    	MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
-    	UUID id = UUID.fromString(details.getUsername());
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<ProfileDTO> getProfile(/*Authentication authentication*/@PathVariable("id") UUID id) {
+    	//MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
+    	//UUID id = UUID.fromString(details.getUsername());
     	Profile result = us.findProfile(id);
     	if(result == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -107,10 +106,10 @@ public class UserController {
     	return ResponseEntity.ok().body(response);
     }
     
-    @PostMapping("/ranking")
-    public ResponseEntity<String> saveRanking(Authentication authentication,@RequestBody RankingDTO ranking){
-    	MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
-    	UUID id = UUID.fromString(details.getUsername());
+    @PostMapping("/ranking/{id}")
+    public ResponseEntity<String> saveRanking(/*Authentication authentication*/@PathVariable("id") UUID id,@RequestBody RankingDTO ranking){
+    	//MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
+    	//UUID id = UUID.fromString(details.getUsername());
     	try {
     		us.setRanking(id, ranking);
     	} catch(WrongUserException ex) {
