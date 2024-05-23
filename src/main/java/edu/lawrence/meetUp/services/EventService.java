@@ -28,6 +28,7 @@ public class EventService {
 		if(!maybeUser.isPresent()) 
 			throw new WrongUserException();
 		Event newEvent = new Event(event);
+		newEvent.setHost(maybeUser.get());
 		eventRepository.save(newEvent);
 		
 		return newEvent.getEventid().toString();

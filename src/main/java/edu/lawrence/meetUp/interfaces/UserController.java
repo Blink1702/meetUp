@@ -92,7 +92,7 @@ public class UserController {
     	return ResponseEntity.ok().body(response);
     }
     
-    @GetMapping("/profile/{sport}")
+    @GetMapping("/profile/sport/{sport}")
     public ResponseEntity<List<ProfileDTO>> getProfileBySport(@PathVariable String sport) {
     	List<Profile> results = us.findProfileBySport(sport);
     	if(results == null) {

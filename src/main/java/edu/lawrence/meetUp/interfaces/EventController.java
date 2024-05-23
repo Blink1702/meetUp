@@ -61,7 +61,7 @@ public class EventController {
 	
 	
 	@GetMapping(params = {"place"})
-	public ResponseEntity<List<EventDTO>> finEventByPlace(@RequestParam(value = "place")String place){
+	public ResponseEntity<List<EventDTO>> findEventByPlace(@RequestParam(value = "place")String place){
 		List<Event> event = es.findEventByPlace(place);
 		List<EventDTO> results = new ArrayList<EventDTO>();
 		for(Event e : event) {
@@ -71,7 +71,7 @@ public class EventController {
 	}
 	
 	@GetMapping(params = {"time"})
-	public ResponseEntity<List<EventDTO>> finEventByTime(@RequestParam(value = "time")String time){
+	public ResponseEntity<List<EventDTO>> findEventByTime(@RequestParam(value = "time")String time){
 		List<Event> event = es.findEventByTime(time);
 		List<EventDTO> results = new ArrayList<EventDTO>();
 		for(Event e : event) {
@@ -81,7 +81,7 @@ public class EventController {
 	}
 	
 	@GetMapping(params = {"sport"})
-	public ResponseEntity<List<EventDTO>> finEventBySport(@RequestParam(value = "sport")String sport){
+	public ResponseEntity<List<EventDTO>> findEventBySport(@RequestParam(value = "sport")String sport){
 		List<Event> event = es.findEventBySport(sport);
 		List<EventDTO> results = new ArrayList<EventDTO>();
 		for(Event e : event) {
