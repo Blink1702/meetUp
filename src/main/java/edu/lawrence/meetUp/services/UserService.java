@@ -96,6 +96,7 @@ public class UserService {
 		List<Profile> existing = profileRepository.findByLongitudeAndLatitudeAndSport(longitude,latitude,sport);
 		if(existing.size() <= 0) 
 			return null;
+		System.out.println(existing);
 		return existing;
 	}
 	
