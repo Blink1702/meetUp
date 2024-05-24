@@ -93,9 +93,9 @@ public class UserController {
     	return ResponseEntity.ok().body(response);
     }
     
-    @GetMapping("/profile/sport/{sport}")
-    public ResponseEntity<List<ProfileDTO>> getProfileBySport(@PathVariable String sport) {
-    	List<Profile> results = us.findProfileBySport(sport);
+    @GetMapping(params = {"lat","long","sport"})
+    public ResponseEntity<List<ProfileDTO>> getProfileBySport(@RequestParam(value = "long")String longitude,@RequestParam(value = "lat")String latitude,@RequestParam(value = "sport")String sport) {
+    	List<Profile> results = us.findProfileByLocationAndSport(longitude, latitude, sport);
     	if(results == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     	}
@@ -106,18 +106,6 @@ public class UserController {
     	}
     	return ResponseEntity.ok().body(response);
     }
-    
-	@GetMapping(params = {"lat","long","sport"})
-	public ResponseEntity<List<ProfileDTO>> getProfileByLocationAndSport(@RequestParam(value = "long")String longitude,@RequestParam(value = "lat")String latitude,@RequestParam(value = "sport")String sport) {
-		List<Profile> results = us.findProfileByLocationAndSport(longitude,latitude,sport);
-		if(results == null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();	
-		List<ProfileDTO> response = new ArrayList<ProfileDTO>();
-		for(Profile p : results) {
-			response.add(new ProfileDTO(p));
-		}
-		return ResponseEntity.ok().body(response);
-	}
     
     @PostMapping("/ranking/{id}")
     public ResponseEntity<String> saveRanking(/*Authentication authentication*/@PathVariable("id") UUID id,@RequestBody RankingDTO ranking){

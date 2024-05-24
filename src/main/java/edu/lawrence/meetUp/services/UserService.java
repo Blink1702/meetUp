@@ -1,5 +1,6 @@
 package edu.lawrence.meetUp.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -83,22 +84,49 @@ public class UserService {
 		return maybeUser.get().getProfile();
 	}
 	
-	public List<Profile> findProfileBySport(String sport) {
+	public List<Profile> findProfileByLocationAndSport(String strcen_lon, String strcen_lat,String sport)  {
 		List<Profile> existing = profileRepository.findBySport(sport);
 		if(existing.size() <= 0) 
 			return null;
 		
-		return existing;
+		Double cen_lat = Double.parseDouble(strcen_lat);
+		Double cen_lon = Double.parseDouble(strcen_lon);
+		
+		List<Profile> filteredExisting = new ArrayList<Profile>();
+    	
+		for(int i=0;i< existing.size();i++) {
+			String strlat = existing.get(i).getLatitude();
+			String strlon = existing.get(i).getLongitude();
+			Double lat = Double.parseDouble(strlat);
+			Double lon = Double.parseDouble(strlon);
+			
+			if(filterProfileByLocation(cen_lat,cen_lon,lat,lon))
+				filteredExisting.add(existing.get(i));
+		}
+		
+		return filteredExisting;
 		
 	}
-	
-	public List<Profile> findProfileByLocationAndSport(String longitude, String latitude,String sport) {
-		List<Profile> existing = profileRepository.findByLongitudeAndLatitudeAndSport(longitude,latitude,sport);
-		if(existing.size() <= 0) 
-			return null;
-		System.out.println(existing);
-		return existing;
+	public boolean filterProfileByLocation(Double cen_lat, Double cen_lon, Double lat, Double lon){
+		Double cen_latRad = Math.toRadians(cen_lat);
+		Double latRad = Math.toRadians(lat);
+		Double cen_lonRad = Math.toRadians(cen_lon);
+		Double lonRad = Math.toRadians(lon);
+		System.out.println(cen_latRad);
+		System.out.println(latRad);
+		System.out.println(cen_lonRad);
+		System.out.println(lonRad);
+		Double x = (lonRad - cen_lonRad) * Math.cos((cen_latRad + latRad)/2);
+		Double y = (latRad - cen_latRad);
+		Double distance = Math.sqrt((x*x)+(y*y)) * 6371;
+		System.out.println(distance);
+		
+		if(distance <= 5) 
+			return true;
+		else
+			return false;
 	}
+	
 	
 	public String setRanking(UUID userid, RankingDTO ranking) throws DuplicateException, WrongUserException{
 		Optional<User> maybeUser = userRepository.findById(userid);
