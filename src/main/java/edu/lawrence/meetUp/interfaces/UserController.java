@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.lawrence.meetUp.entities.Profile;
@@ -105,6 +106,18 @@ public class UserController {
     	}
     	return ResponseEntity.ok().body(response);
     }
+    
+	@GetMapping(params = {"lat","long","sport"})
+	public ResponseEntity<List<ProfileDTO>> getProfileByLocationAndSport(@RequestParam(value = "long")String longitude,@RequestParam(value = "lat")String latitude,@RequestParam(value = "sport")String sport) {
+		List<Profile> results = us.findProfileByLocationAndSport(longitude,latitude,sport);
+		if(results == null)
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();	
+		List<ProfileDTO> response = new ArrayList<ProfileDTO>();
+		for(Profile p : results) {
+			response.add(new ProfileDTO(p));
+		}
+		return ResponseEntity.ok().body(response);
+	}
     
     @PostMapping("/ranking/{id}")
     public ResponseEntity<String> saveRanking(/*Authentication authentication*/@PathVariable("id") UUID id,@RequestBody RankingDTO ranking){

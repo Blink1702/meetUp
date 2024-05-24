@@ -9,4 +9,5 @@ import edu.lawrence.meetUp.entities.User;
 
 public interface ProfileRepository extends JpaRepository<Profile,UUID> {
 	List<Profile> findBySport(String sport);
+	List<Profile> findByLongitudeAndLatitudeAndSport(String longitude,String latitude,String sport);
 }
