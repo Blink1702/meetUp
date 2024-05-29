@@ -60,6 +60,7 @@ public class UserService {
         }
         return u;	
 	}
+
 	
 	public String saveProfile (ProfileDTO profile) throws DuplicateException, WrongUserException{
 		Optional<User> maybeUser = userRepository.findById(UUID.fromString(profile.getUser().toString()));
@@ -85,7 +86,21 @@ public class UserService {
 	}
 	
 	public List<Profile> findProfileByLocationAndSport(String strcen_lon, String strcen_lat,String sport)  {
-		List<Profile> existing = profileRepository.findBySport(sport);
+		List<Profile> all = profileRepository.findAll();
+		List<Profile> existing = new ArrayList<Profile>();
+		
+		for(int i=0;i<all.size();i++) {
+			String sports = all.get(i).getSport();
+			String[] sportArray;
+			sportArray = sports.split(",");
+			for(int j=0;j<sportArray.length;j++) {
+				System.out.println("Split:"+sportArray[j]);
+				if(sportArray[j].equals(sport))
+					existing.add(all.get(i));
+			}
+		}
+		
+		//List<Profile> existing = profileRepository.findBySport(sport);
 		if(existing.size() <= 0) 
 			return null;
 		

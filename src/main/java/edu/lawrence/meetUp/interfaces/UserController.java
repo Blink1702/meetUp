@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,34 +56,36 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody UserDTO user){
+	public ResponseEntity<UserDTO> login(@RequestBody UserDTO user){
 		User result = us.findByUsernameAndPassword(user.getUsername(), user.getPassword());
 	    if (result == null) {
-	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("/Invalid username or password/");
+	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(user);
         }
         String token = jwtService.makeJwt(result.getUserid().toString());
         user.setToken(token);
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok().body(user);
 	}
-	
-	@PostMapping("/profile/{id}")
-	public ResponseEntity<String> saveProfile(/*Authentication authentication*/@PathVariable("id") UUID id,@RequestBody ProfileDTO profile) {
-		//MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();	
+
+	@PostMapping("/profile")
+	public ResponseEntity<String> saveProfile(Authentication authentication,@RequestBody ProfileDTO profile) {
+		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();	
+		UUID id = UUID.fromString(details.getUsername());
 		profile.setUser(id.toString());
     	try {
     		us.saveProfile(profile);
     	} catch(WrongUserException ex) {
-    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("/Invalid user id/");
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("\"Invalid user id\"");
     	} catch(DuplicateException ex) {
-    		return ResponseEntity.status(HttpStatus.CONFLICT).body("/Duplicate profile/");
+    		return ResponseEntity.status(HttpStatus.CONFLICT).body("\"Duplicate profile\"");
     	}
-    	return ResponseEntity.status(HttpStatus.CREATED).body("/Profile created/");
+    	return ResponseEntity.status(HttpStatus.CREATED).body("\"Profile created\"");
     }
 	
-    @GetMapping("/profile/{id}")
-    public ResponseEntity<ProfileDTO> getProfile(/*Authentication authentication*/@PathVariable("id") UUID id) {
-    	//MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
-    	//UUID id = UUID.fromString(details.getUsername());
+    @GetMapping("/profile")
+    public ResponseEntity<ProfileDTO> getProfile(Authentication authentication) {
+    	MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
+    	UUID id = UUID.fromString(details.getUsername());
+    	
     	Profile result = us.findProfile(id);
     	if(result == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -94,7 +95,7 @@ public class UserController {
     }
     
     @GetMapping(params = {"lat","long","sport"})
-    public ResponseEntity<List<ProfileDTO>> getProfileBySport(@RequestParam(value = "long")String longitude,@RequestParam(value = "lat")String latitude,@RequestParam(value = "sport")String sport) {
+    public ResponseEntity<List<ProfileDTO>> getProfileBySport(@RequestParam(value = "lat")String latitude,@RequestParam(value = "long")String longitude,@RequestParam(value = "sport")String sport) {
     	List<Profile> results = us.findProfileByLocationAndSport(longitude, latitude, sport);
     	if(results == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -106,19 +107,20 @@ public class UserController {
     	}
     	return ResponseEntity.ok().body(response);
     }
-    
-    @PostMapping("/ranking/{id}")
-    public ResponseEntity<String> saveRanking(/*Authentication authentication*/@PathVariable("id") UUID id,@RequestBody RankingDTO ranking){
-    	//MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
-    	//UUID id = UUID.fromString(details.getUsername());
+    	
+    @PostMapping("/ranking")
+    public ResponseEntity<String> saveRanking(Authentication authentication,@RequestBody RankingDTO ranking){
+    	MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
+    	UUID id = UUID.fromString(details.getUsername());
+    	
     	try {
     		us.setRanking(id, ranking);
     	} catch(WrongUserException ex) {
-    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("/Invalid user id/");
+    		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("\"Invalid user id\"");
     	} catch(DuplicateException ex) {
-    		return ResponseEntity.status(HttpStatus.CONFLICT).body("/Duplicate user/");
+    		return ResponseEntity.status(HttpStatus.CONFLICT).body("\"Duplicate user\"");
     	}
-    	return ResponseEntity.status(HttpStatus.CREATED).body("/Ranking set/");
+    	return ResponseEntity.status(HttpStatus.CREATED).body("\"Ranking set\"");
     }
     
 	

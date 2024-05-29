@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 import edu.lawrence.meetUp.entities.Event;
 import edu.lawrence.meetUp.interfaces.dtos.EventDTO;
 import edu.lawrence.meetUp.security.MeetupUserDetails;
@@ -32,31 +34,33 @@ public class EventController {
 		this.es = es;
 	}
 	
-	@PostMapping("/{id}")
-	public ResponseEntity<String> save(/*Authentication authentication*/@PathVariable("id") UUID id,@RequestBody EventDTO event){
-		//MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
+	@PostMapping
+	public ResponseEntity<String> save(Authentication authentication,@RequestBody EventDTO event){
+		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
+		UUID id = UUID.fromString(details.getUsername());
 		event.setHost(id.toString());
 		String key;
 		try{
 			key = es.save(event);
 		} catch(WrongUserException ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("/Invalid user id/");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("\"Invalid user id\"");
 		}
 			return ResponseEntity.ok().body(key);
 	}
 	
 	
-	@PostMapping("/participate/{eventid}/{participantid}")
-	public ResponseEntity<String> addParticipant(/*Authentication authentication*/@PathVariable("eventid") UUID eventid,@PathVariable("participantid") UUID participantid,@RequestBody EventDTO event){
-		//MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
+	@PostMapping("/participate/{eventid}")
+	public ResponseEntity<String> addParticipant(Authentication authentication,@PathVariable("eventid") UUID eventid,@RequestBody EventDTO event){
+		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
+		UUID participantid = UUID.fromString(details.getUsername());
 		event.setParticipant(participantid.toString());
 		try {
 			es.setParticipant(eventid,participantid);
 		} catch(WrongUserException ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("/Invalid user id/");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("\"Invalid user id\"");
 		}
 		
-		return ResponseEntity.ok().body("/Signed up for event/");
+		return ResponseEntity.ok().body("\"Signed up for event\"");
 	}
 	
 	

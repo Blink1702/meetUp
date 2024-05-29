@@ -11,7 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -26,13 +25,12 @@ public class SecurityConfig {
         .csrf(csrf -> csrf.disable())
         .sessionManagement(management -> management
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        //.authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/users/**", "/users/login","/auth/**", "/error","/account").permitAll()
-         //   .requestMatchers(HttpMethod.GET, "/events","/auth/**", "/error", "/account").permitAll()
-          //      .anyRequest().authenticated()
-          //      )
+        .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/users", "/users/login").permitAll()
+            .requestMatchers(HttpMethod.GET, "/events", "/users").permitAll()
+                .anyRequest().authenticated()
+                )
         .addFilterBefore( jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); 
         return http.build();
     }
 
 }
-
