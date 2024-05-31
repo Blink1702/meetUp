@@ -42,13 +42,14 @@ public class EventService {
 		
 		Optional<Event> maybeEvent = eventRepository.findById(eventid);
 		if(!maybeEvent.isPresent())
-			throw new WrongUserException();
+			return null;
 		Event existingEvent = maybeEvent.get();
 		existingEvent.setParticipant(participant);
 		eventRepository.save(existingEvent);
 		
 		return "Participant saved";
 	}
+	
 	
 	public List<Event> findEventByTime(String time) {
 		return eventRepository.findByTime(time);

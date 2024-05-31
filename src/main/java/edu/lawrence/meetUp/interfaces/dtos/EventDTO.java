@@ -4,6 +4,7 @@ import edu.lawrence.meetUp.entities.Event;
 import edu.lawrence.meetUp.entities.User;
 
 public class EventDTO {
+	private String eventid;
 	private String host;
 	private String participant;
 	private String time;
@@ -13,6 +14,7 @@ public class EventDTO {
 	public EventDTO() {}
 	
 	public EventDTO(Event core) {
+		eventid = core.getEventid().toString();
 		host = core.getHost().getUserid().toString();
 		participant = core.getParticipant().getUserid().toString();
 		time = core.getTime();
@@ -59,6 +61,14 @@ public class EventDTO {
 
 	public void setSport(String sport) {
 		this.sport = sport;
+	}
+
+	public String getEventid() {
+		return eventid;
+	}
+
+	public void setEventid(String eventid) {
+		this.eventid = eventid;
 	}
 
 

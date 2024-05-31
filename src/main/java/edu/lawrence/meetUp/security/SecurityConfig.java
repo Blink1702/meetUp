@@ -26,7 +26,7 @@ public class SecurityConfig {
         .sessionManagement(management -> management
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(authorize -> authorize.requestMatchers(HttpMethod.POST, "/users", "/users/login").permitAll()
-            .requestMatchers(HttpMethod.GET, "/events", "/users").permitAll()
+            .requestMatchers(HttpMethod.GET, "/events", "/users", "/users/ranking", "/users/profiles/**").permitAll()
                 .anyRequest().authenticated()
                 )
         .addFilterBefore( jwtAuthFilter, UsernamePasswordAuthenticationFilter.class); 

@@ -35,7 +35,7 @@ public class EventController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<String> save(Authentication authentication,@RequestBody EventDTO event){
+	public ResponseEntity<EventDTO> save(Authentication authentication,@RequestBody EventDTO event){
 		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
 		UUID id = UUID.fromString(details.getUsername());
 		event.setHost(id.toString());
@@ -43,17 +43,19 @@ public class EventController {
 		try{
 			key = es.save(event);
 		} catch(WrongUserException ex) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("\"Invalid user id\"");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(event);
 		}
-			return ResponseEntity.ok().body(key);
+		event.setEventid(key);
+		
+		return ResponseEntity.ok().body(event);
 	}
 	
 	
 	@PostMapping("/participate/{eventid}")
-	public ResponseEntity<String> addParticipant(Authentication authentication,@PathVariable("eventid") UUID eventid,@RequestBody EventDTO event){
+	public ResponseEntity<String> addParticipant(Authentication authentication,@PathVariable("eventid") UUID eventid){
 		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
 		UUID participantid = UUID.fromString(details.getUsername());
-		event.setParticipant(participantid.toString());
+		
 		try {
 			es.setParticipant(eventid,participantid);
 		} catch(WrongUserException ex) {

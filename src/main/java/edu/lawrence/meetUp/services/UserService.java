@@ -94,7 +94,6 @@ public class UserService {
 			String[] sportArray;
 			sportArray = sports.split(",");
 			for(int j=0;j<sportArray.length;j++) {
-				System.out.println("Split:"+sportArray[j]);
 				if(sportArray[j].equals(sport))
 					existing.add(all.get(i));
 			}
@@ -127,14 +126,9 @@ public class UserService {
 		Double latRad = Math.toRadians(lat);
 		Double cen_lonRad = Math.toRadians(cen_lon);
 		Double lonRad = Math.toRadians(lon);
-		System.out.println(cen_latRad);
-		System.out.println(latRad);
-		System.out.println(cen_lonRad);
-		System.out.println(lonRad);
 		Double x = (lonRad - cen_lonRad) * Math.cos((cen_latRad + latRad)/2);
 		Double y = (latRad - cen_latRad);
 		Double distance = Math.sqrt((x*x)+(y*y)) * 6371;
-		System.out.println(distance);
 		
 		if(distance <= 5) 
 			return true;
@@ -157,6 +151,15 @@ public class UserService {
 		rankingRepository.save(newRanking);
 		
 		return newRanking.getRankingid().toString();
+	}
+	
+	public List<Ranking> getRanking(){
+		List<Ranking> all = rankingRepository.findAll();
+		
+		if(all.isEmpty())
+			return null;
+		
+		return all;
 	}
 	
 
