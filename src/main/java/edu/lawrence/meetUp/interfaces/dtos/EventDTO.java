@@ -15,8 +15,8 @@ public class EventDTO {
 	
 	public EventDTO(Event core) {
 		eventid = core.getEventid().toString();
-		host = core.getHost().getUserid().toString();
-		participant = core.getParticipant().getUserid().toString();
+		host = core.getHost().getUsername();
+		participant = core.getParticipant().getUsername();
 		time = core.getTime();
 		place = core.getPlace();
 		sport = core.getSport();

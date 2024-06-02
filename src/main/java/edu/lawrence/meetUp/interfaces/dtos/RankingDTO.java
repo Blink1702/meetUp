@@ -13,7 +13,7 @@ public class RankingDTO {
 	public RankingDTO() {}
 
 	public RankingDTO(Ranking core) {
-		user = core.getUser().getUserid().toString();
+		user = core.getUser().getUsername();
 		pingpong = core.getPingpong();
 		tennis = core.getTennis();
 		pickleball = core.getPickleball();

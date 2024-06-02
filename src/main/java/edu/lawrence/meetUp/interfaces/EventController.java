@@ -39,6 +39,7 @@ public class EventController {
 		MeetupUserDetails details = (MeetupUserDetails) authentication.getPrincipal();
 		UUID id = UUID.fromString(details.getUsername());
 		event.setHost(id.toString());
+		event.setParticipant("");
 		String key;
 		try{
 			key = es.save(event);
